@@ -14,3 +14,6 @@ look for Elasticsearch and then click on `Copy endpoint`.  Use that for your ser
 
 On this same page, you can get the Cloud ID.  Which of these you use depends on which Client configuration sample you use.
 
+Elastic endpoint:
+https://hw5.es.us-central1.gcp.cloud.es.io
+

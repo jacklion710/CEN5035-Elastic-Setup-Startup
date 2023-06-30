@@ -1,4 +1,4 @@
-env = require('dotenv').config()
+env = require('./.env-sample').config()
 console.log(process.env)
 
 client_config = {}

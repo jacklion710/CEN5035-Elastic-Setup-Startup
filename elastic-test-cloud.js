@@ -1,6 +1,7 @@
 'use strict'
 const { env } = require('dotenv').config()
 const { Client } = require('@elastic/elasticsearch')
+const fs = require('fs')
 
 var client_config = {}
 var cloud_id = {}
@@ -12,9 +13,21 @@ cloud_auth.apiKey = process.env.elastic_api_token;
 client_config.cloud = cloud_id;
 client_config.auth = cloud_auth;
 
-// instantiate Elastic Client
-const client = new Client(client_config);
 
+// instantiate Elastic Client
+// const client = new Client(client_config);
+// const { Client } = require('@elastic/elasticsearch')
+const client = new Client({
+  node: 'https://localhost:9200',
+  auth: {
+    username: 'elastic',
+    password: 'LPzbulGN2FM7znzJS8QJ'
+  },
+  tls: {
+    ca: fs.readFileSync('../http_ca.crt'),
+    rejectUnauthorized: false
+  }
+})
 async function run() {
   // Let's start by indexing some data
   await client.index({

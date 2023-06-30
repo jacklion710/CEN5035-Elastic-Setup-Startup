@@ -17,10 +17,10 @@ curl -H "Content-Type: application/json" -XGET '127.0.0.1:9200/shakespeare/_sear
 }' 
 
 
-curl -H "Content-Type: application/json" -H "Authorization: ApiKey <API Key> \ 
+curl -H "Content-Type: application/json" -H "Authorization: ApiKey UGVTN0NJa0J0aTM5bXFYWUhRNGw6amwxazd4czFRX1N2eDhqLTFnSzY1Zw== \ 
 -XPUT https://my-deployment-1ed11c.es.eastus2.azure.elastic-cloud.com/shakespeare --data-binary @shakes-mapping.json
 
 curl -H "Content-Type: application/json" -XPUT '127.0.0.1:9200/shakespeare/_bulk' --data-binary @shakespeare_8.0.json
 
-curl -H "Content-Type: application/json" -H "Authorization: ApiKey <API Key> \
+curl -H "Content-Type: application/json" -H "Authorization: ApiKey UGVTN0NJa0J0aTM5bXFYWUhRNGw6amwxazd4czFRX1N2eDhqLTFnSzY1Zw== \
 -XPUT https://my-deployment-1ed11c.es.eastus2.azure.elastic-cloud.com/shakespeare/_bulk --data-binary @shakespeare_8.0.json
