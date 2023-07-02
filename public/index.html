@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shakespeare Search</title>
+    <!-- Include Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Include jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Shakespeare Search</h1>
+        <div class="form-group">
+            <input type="text" class="form-control" id="quote" placeholder="Enter Quote">
+            <input type="text" class="form-control" id="character" placeholder="Enter Character">
+            <button id="search" class="btn btn-primary">Search</button>
+        </div>
+        <table class="table" id="results">
+            <thead>
+                <tr>
+                    <th>Quote</th>
+                    <th>Character</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#search').click(function() {
+                var quote = $('#quote').val();
+                var character = $('#character').val();
+
+                $.get("http://localhost:5678/search", { quote: quote, character: character }, function(data) {
+                    if (data.error) {
+                        alert(data.error);
+                    } else {
+                        var tableBody = '';
+                        $.each(data, function(index, item) {
+                            tableBody += '<tr><td>' + item._source.text_entry + '</td><td>' + item._source.character + '</td></tr>';
+                        });
+                        $('#results tbody').html(tableBody);
+                    }
+                }).fail(function() {
+                    alert('Error executing search');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

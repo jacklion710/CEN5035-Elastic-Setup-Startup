@@ -17,10 +17,77 @@ curl -H "Content-Type: application/json" -XGET '127.0.0.1:9200/shakespeare/_sear
 }' 
 
 
-curl -H "Content-Type: application/json" -H "Authorization: ApiKey UGVTN0NJa0J0aTM5bXFYWUhRNGw6amwxazd4czFRX1N2eDhqLTFnSzY1Zw== \ 
--XPUT https://my-deployment-1ed11c.es.eastus2.azure.elastic-cloud.com/shakespeare --data-binary @shakes-mapping.json
+curl -H "Content-Type: application/json" -H "Authorization: ApiKey SXBoTkRva0JHOXotRVphMmZBcVE6Mk8tSVZldVZUTkNkWFF4QTMtbW9lUQ==" -XPUT https://my-deployment-1ed11c.es.eastus2.azure.elastic-cloud.com/shakespeare --data-binary @shakes-mapping.json
 
-curl -H "Content-Type: application/json" -XPUT '127.0.0.1:9200/shakespeare/_bulk' --data-binary @shakespeare_8.0.json
+curl -H "Content-Type: application/json" -XPUT 'https://my-deployment-1ed11c.es.eastus2.azure.elastic-cloud.com/shakespeare/_bulk' --data-binary @shakespeare_8.0.json
 
-curl -H "Content-Type: application/json" -H "Authorization: ApiKey UGVTN0NJa0J0aTM5bXFYWUhRNGw6amwxazd4czFRX1N2eDhqLTFnSzY1Zw== \
--XPUT https://my-deployment-1ed11c.es.eastus2.azure.elastic-cloud.com/shakespeare/_bulk --data-binary @shakespeare_8.0.json
+curl -H "Content-Type: application/json" -H "Authorization: elastic:LPzbulGN2FM7znzJS8QJ" -XPUT 'https://my-deployment-1ed11c.es.eastus2.azure.elastic-cloud.com/shakespeare/_bulk' --data-binary @shakespeare_8.0.json
+
+curl -u elastic:LPzbulGN2FM7znzJS8QJ -H "Content-Type: application/json" -H "Authorization: ApiKey SXBoTkRva0JHOXotRVphMmZBcVE6Mk8tSVZldVZUTkNkWFF4QTMtbW9lUQ==" \
+-XPUT https://hw5.es.us-central1.gcp.cloud.es.io/shakespeare/_bulk --data-binary @shakespeare_8.0.json
+
+Other key: UGVTN0NJa0J0aTM5bXFYWUhRNGw6amwxazd4czFRX1N2eDhqLTFnSzY1Zw== 
+
+
+curl -u elastic:LPzbulGN2FM7znzJS8QJ -H "Content-Type: application/json" -XPUT https://my-deployment-1ed11c.es.eastus2.azure.elastic-cloud.com/shakespeare --data-binary @shakes-mapping.json
+
+Curl -u elastic:LPzbulGN2FM7znzJS8QJ -XPUT https://my-deployment-1ed11c.es.eastus2.azure.elastic-cloud.com/shakespeare
+
+curl -H "Content-Type: application/json" -H "Authorization: ApiKey SXBoTkRva0JHOXotRVphMmZBcVE6Mk8tSVZldVZUTkNkWFF4QTMtbW9lUQ==" -XPUT https://hw5.es.us-central1.gcp.cloud.es.io/shakespeare --data-binary @shakes-mapping.json
+
+curl -XGET 'http://localhost:9200/https://hw5.es.us-central1.gcp.cloud.es.io/_search' -d '
+{
+    "query" : {
+        "match_phrase" : {
+            "text_entry" : "to be or not to be"
+        }
+    }
+}'
+
+curl -XGET 'http://localhost:9200/9200/_search' -H 'Content-Type: application/json' -d '
+{
+    "query" : {
+        "match_phrase" : {
+            "text_entry" : "to be or not to be"
+        }
+    }
+}'
+
+curl -XGET 'https://elastic:LPzbulGN2FM7znzJS8QJ@hw5.es.us-central1.gcp.cloud.es.io/_search' -H 'Content-Type: application/json' -d '
+{
+    "query" : {
+        "match_phrase" : {
+            "text_entry" : "to be or not to be"
+        }
+    }
+}'
+
+curl -XGET 'https://hw5.es.us-central1.gcp.cloud.es.io/_search' -H 'Authorization: ApiKey SXBoTkRva0JHOXotRVphMmZBcVE6Mk8tSVZldVZUTkNkWFF4QTMtbW9lUQ==' -H 'Content-Type: application/json' -d '
+{
+    "query" : {
+        "match_phrase" : {
+            "text_entry" : "to be or not to be"
+        }
+    }
+}'
+
+curl -k "https://localhost:5678/search?quote=to%20be%2C%20or%20not%20to%20be&character=HAMLET"
+
+
+
+
+API key1: SXBoTkRva0JHOXotRVphMmZBcVE6Mk8tSVZldVZUTkNkWFF4QTMtbW9lUQ==
+API key2: UGVTN0NJa0J0aTM5bXFYWUhRNGw6amwxazd4czFRX1N2eDhqLTFnSzY1Zw==
+
+docker run -d --name kibana --net elastic  -p 5601:5601 kibana:8.8.0
+
+-H 'Authorization: ApiKey SXBoTkRva0JHOXotRVphMmZBcVE6Mk8tSVZldVZUTkNkWFF4QTMtbW9lUQ=='
+
+docker run -d --name kibana --net elastic -p 5601:5601 -e ELASTICSEARCH_USERNAME=elastic -e ELASTICSEARCH_PASSWORD=your_api_key_here docker.elastic.co/kibana/kibana:8.8.0
+
+docker run -d --name kibana --net elastic -p 5601:5601 -e "ELASTICSEARCH_USERNAME=elastic" -e "ELASTICSEARCH_PASSWORD=LPzbulGN2FM7znzJS8QJ" kibana:8.8.0
+
+docker run -u elastic:LPzbulGN2FM7znzJS8QJ -d --name kibana --net elastic -p 5601:5601 kibana:8.8.0
+
+docker run -d --name kibana --net elastic -p 5601:5601 -e ENROLLMENT_TOKEN="eyJ2ZXIiOiI4LjguMSIsImFkciI6WyIxNzIuMTguMC4yOjkyMDAiXSwiZmdyIjoiNWNkMjJjNjBmNzQwYjcyMzNlOGJiOGY4ZTFiYzdjMjE2OTQwMGY3ZGI1ZGEzYWRhMjk3MzEyYzdjYjg1NTEzNyIsImtleSI6IlEwblNDSWtCR0ZxWlJaVlk4TXlYOmlzUGtqZUJFVFBlbnkwSktzWXVVVFEifQ==" kibana:8.8.0
+
