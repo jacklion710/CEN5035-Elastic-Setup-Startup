@@ -14,8 +14,30 @@
         <div class="form-group">
             <input type="text" class="form-control" id="quote" placeholder="Enter Quote">
             <input type="text" class="form-control" id="character" placeholder="Enter Character">
+            <input type="text" class="form-control" id="play" placeholder="Enter Play Name">
             <button id="search" class="btn btn-primary">Search</button>
         </div>
+        
+        <table class="table" id="results">
+            <thead>
+                <tr>
+                    <th>Quote</th>
+                    <th>Character</th>
+                    <th>Line Number</th>
+                    <th>Speaker</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        
+        <div class="form-group">
+    <input type="text" class="form-control" id="quote" placeholder="Enter Quote">
+    <input type="text" class="form-control" id="character" placeholder="Enter Character">
+    <input type="text" class="form-control" id="play" placeholder="Enter Play Name">
+    <button id="search" class="btn btn-primary">Search</button>
+</div>
+
         <table class="table" id="results">
             <thead>
                 <tr>
@@ -28,60 +50,31 @@
         </table>
     </div>
 
-    <!-- <script>
-        $(document).ready(function() {
-            $('#search').click(function() {
-                var quote = $('#quote').val();
-                var character = $('#character').val();
-
-                $.get("http://localhost:5678/search", { quote: quote, character: character }, function(data) {
-                    if (data.error) {
-                        alert(data.error);
-                    } else {
-                        var tableBody = '';
-                        $.each(data, function(index, item) {
-                            tableBody += '<tr><td>' + item._source.text_entry + '</td><td>' + item._source.character + '</td></tr>';
-                        });
-                        $('#results tbody').html(tableBody);
-                    }
-                }).fail(function() {
-                    alert('Error executing search');
-                });
-            });
-        });
-    </script> -->
     
     <script>
         $(document).ready(function() {
-            // Call to /plays to fetch play names
-            $.get("http://localhost:5678/plays", function(data) {
-                var select = $('<select id="play" class="form-control"></select>');
-                $.each(data, function(index, play) {
-                    select.append($('<option></option>').val(play).html(play));
-                });
-                // Add the select dropdown after the 'character' input field
-                $('#character').after(select);
-            });
-    
             $('#search').click(function() {
                 var quote = $('#quote').val();
                 var character = $('#character').val();
-    
-                $.get("http://localhost:5678/search", { quote: quote, character: character }, function(data) {
+                var play = $('#play').val();
+
+                $.get("http://localhost:5678/search", { quote: quote, character: character, play: play }, function(data) {
                     if (data.error) {
                         alert(data.error);
                     } else {
                         var tableBody = '';
                         $.each(data, function(index, item) {
-                            tableBody += '<tr><td>' + item._source.text_entry + '</td><td>' + item._source.character + '</td></tr>';
+                            tableBody += '<tr><td>' + item._source.text_entry + '</td><td>' + item._source.character + '</td><td>' + item._source.line_number + '</td><td>' + item._source.speaker + '</td></tr>';
                         });
                         $('#results tbody').html(tableBody);
                     }
                 }).fail(function() {
                     alert('Error executing search');
                 });
+
             });
         });
+
     </script>
     
 </body>

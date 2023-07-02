@@ -14,7 +14,8 @@
     "test": "jest",
     "elastic-test-cloud.js": "node elastic-test-cloud.js",
     "elastic-test-local.js": "node elastic-test-local.js",
-    "app-search.js": "node app-search.js"
+    "app-search.js": "node app-search.js",
+    "app-search2.js": "node app-search2.js"
   },
   "author": "",
   "license": "ISC",

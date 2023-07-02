@@ -29,44 +29,62 @@ const client = new Client({
   app.get('/search', async function (req, res) {
     let quote = req.query.quote;
     let character = req.query.character;
-
-    console.log("quote=", quote);
-    console.log("character=", character);
+    let play = req.query.play;
 
     let query_str = {};
 
-    if (quote && character) {
-        query_str = {
-            index: "shakespeare",
-            body: {
-                query: {
-                    bool: {
-                        must: [
-                            { match: {"character.keyword": character}},
-                            { match: {"text_entry": quote}}
-                        ]
-                    }
+    if (play) {
+      query_str = {
+        index: "shakespeare",
+        body: {
+            query: {
+                bool: {
+                    must: [
+                        { match: {"play_name.keyword": play}},
+                        { match: {"text_entry": quote}},
+                        { match: {"character.keyword": character}}
+                    ]
                 }
             }
-        };
-        try {
-            const resp = await client.search(query_str);
-            res.json(resp.body.hits.hits);
-        } catch (err) {
-            console.error(err); // Log the full error
-            res.json({ error: 'Error executing search', details: err.message });
         }
+      };
+    } else if (quote && character) {
+      query_str = {
+        index: "shakespeare",
+        body: {
+            query: {
+                bool: {
+                    must: [
+                        { match: {"play_name.keyword": play}},
+                        { match: {"text_entry": quote}},
+                        { match: {"character.keyword": character}}
+                    ]
+                }
+            },
+            _source: ["text_entry", "line_number", "speaker"] // Only return these fields
+        }
+    };
+    
     } else {
-        res.json({ error: 'Both quote and character must be provided' });
+        return res.json({ error: 'Both quote and character must be provided' });
+    }
+
+    try {
+        const resp = await client.search(query_str);
+        res.json(resp.body.hits.hits);
+    } catch (err) {
+        console.error(err); // Log the full error
+        res.json({ error: 'Error executing search', details: err.message });
     }
 });
+
 
 app.listen(5678, () => {
   console.log('Server is running on port 5678...');
 });
 
 app.get('/', function(req, res){
-  res.sendFile('index.html', { root: __dirname + '/public' }); // Serve 'index.html' when a user visits the root URL
+  res.sendFile('index2.html', { root: __dirname + '/public' }); // Serve 'index2.html' when a user visits the root URL
 });
 
 
