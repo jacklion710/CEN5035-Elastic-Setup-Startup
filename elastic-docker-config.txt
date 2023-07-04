@@ -11,7 +11,7 @@
 ℹ️  Configure Kibana to use this cluster:
 • Run Kibana and click the configuration link in the terminal when Kibana starts.
 • Copy the following enrollment token and paste it into Kibana in your browser (valid for the next 30 minutes):
-  eyJ2ZXIiOiI4LjguMSIsImFkciI6WyIxNzIuMTguMC4yOjkyMDAiXSwiZmdyIjoiNWNkMjJjNjBmNzQwYjcyMzNlOGJiOGY4ZTFiYzdjMjE2OTQwMGY3ZGI1ZGEzYWRhMjk3MzEyYzdjYjg1NTEzNyIsImtleSI6IlEwblNDSWtCR0ZxWlJaVlk4TXlYOmlzUGtqZUJFVFBlbnkwSktzWXVVVFEifQ==
+  eyJ2ZXIiOiI4LjguMSIsImFkciI6WyIxNzIuMTguMC4zOjkyMDAiXSwiZmdyIjoiNWNkMjJjNjBmNzQwYjcyMzNlOGJiOGY4ZTFiYzdjMjE2OTQwMGY3ZGI1ZGEzYWRhMjk3MzEyYzdjYjg1NTEzNyIsImtleSI6Ikc5LTJHSWtCMk4wVlJyanhXdEF3Om1DTWNMOUdVUkV5QTFaOTJRbVp3aUEifQ==
 
 ℹ️ Configure other nodes to join this cluster:
 • Copy the following enrollment token and start new Elasticsearch nodes with `bin/elasticsearch --enrollment-token <token>` (valid for the next 30 minutes):
